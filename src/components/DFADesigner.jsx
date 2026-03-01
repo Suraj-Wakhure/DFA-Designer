@@ -128,8 +128,11 @@ export default function DFADesigner() {
         {/* ── Query input ── */}
         <div style={styles.card}>
           <div style={styles.cardTopLine} />
-          <label style={styles.inputLabel}>Language Description</label>
-          <div style={styles.inputRow}>
+          <div style={styles.inputLabelRow}>
+            <label style={styles.inputLabel}>⌨ Language Description</label>
+            <span style={styles.inputHint}>Ctrl + Enter to generate</span>
+          </div>
+          <div className="input-row">
             <textarea
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -145,6 +148,7 @@ export default function DFADesigner() {
             <button
               onClick={generate}
               disabled={loading || !query.trim()}
+              className="generate-btn"
               style={{
                 ...styles.generateBtn,
                 opacity: loading || !query.trim() ? 0.55 : 1,
@@ -273,11 +277,61 @@ export default function DFADesigner() {
         )}
       </div>
 
+      {/* ── Footer ── */}
+      <footer style={styles.footer}>
+        <div style={styles.footerGlow} />
+        <div style={styles.footerInner}>
+          <div style={styles.footerTopLine} />
+          <div style={styles.footerContent}>
+            <div style={styles.footerLeft}>
+              <span style={styles.footerLogo}>DFA DESIGNER</span>
+              <span style={styles.footerTagline}>intelligence meets automata theory</span>
+            </div>
+            <div style={styles.footerCenter}>
+              <span style={styles.footerBuiltBy}>crafted by</span>
+              <span style={styles.footerName}>Suraj Wakhure</span>
+              <div style={styles.footerNameUnderline} />
+            </div>
+            <div style={styles.footerRight}>
+              <span style={styles.footerStack}>React · Groq AI · Express</span>
+              <span style={styles.footerYear}>© {new Date().getFullYear()}</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse-dot {
           0%,100% { opacity:1; transform:scale(1); }
           50% { opacity:0.35; transform:scale(0.6); }
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes fade-in-up {
+          from { opacity:0; transform:translateY(16px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        .fade-in-up { animation: fade-in-up 0.4s ease both; }
+        .input-row {
+          display: flex;
+          gap: 12px;
+        }
+        .generate-btn {
+          min-width: 130px;
+        }
+        @media (max-width: 600px) {
+          .input-row {
+            flex-direction: column;
+          }
+          .generate-btn {
+            width: 100% !important;
+            min-width: unset !important;
+            padding: 14px !important;
+            font-size: 14px !important;
+          }
         }
       `}</style>
     </div>
@@ -377,6 +431,82 @@ const styles = {
   },
   subtitle: { color: "#374151", fontSize: 13, letterSpacing: "0.05em" },
 
+  footer: {
+    position: "relative",
+    borderTop: "1px solid #1e1e35",
+    marginTop: 24,
+    background: "#06060f",
+    overflow: "hidden",
+  },
+  footerGlow: {
+    position: "absolute", top: 0, left: "50%",
+    transform: "translateX(-50%)",
+    width: 600, height: 1,
+    background: "linear-gradient(90deg,transparent,#6366f1,#67e8f9,transparent)",
+    opacity: 0.6,
+  },
+  footerInner: {
+    maxWidth: 1100, margin: "0 auto",
+    padding: "28px 20px",
+  },
+  footerTopLine: {
+    height: 1, marginBottom: 24,
+    background: "linear-gradient(90deg,transparent,#1e1e35,transparent)",
+  },
+  footerContent: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 20,
+  },
+  footerLeft: {
+    display: "flex", flexDirection: "column", gap: 4,
+  },
+  footerLogo: {
+    fontSize: 13, fontWeight: 900, letterSpacing: "0.1em",
+    background: "linear-gradient(135deg,#fff,#a5b4fc)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+  },
+  footerTagline: {
+    fontSize: 10, color: "#374151", letterSpacing: "0.08em",
+  },
+  footerCenter: {
+    display: "flex", flexDirection: "column",
+    alignItems: "center", gap: 4,
+  },
+  footerBuiltBy: {
+    fontSize: 9, color: "#374151",
+    letterSpacing: "0.2em", textTransform: "uppercase",
+  },
+  footerName: {
+    fontSize: 18, fontWeight: 900,
+    letterSpacing: "0.05em",
+    background: "linear-gradient(135deg,#a5b4fc 0%,#67e8f9 50%,#a5b4fc 100%)",
+    backgroundSize: "200% auto",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    animation: "shimmer 3s linear infinite",
+  },
+  footerNameUnderline: {
+    width: "100%", height: 1,
+    background: "linear-gradient(90deg,transparent,#6366f1,#67e8f9,transparent)",
+    opacity: 0.5,
+  },
+  footerRight: {
+    display: "flex", flexDirection: "column",
+    alignItems: "flex-end", gap: 4,
+  },
+  footerStack: {
+    fontSize: 10, color: "#374151",
+    letterSpacing: "0.06em",
+  },
+  footerYear: {
+    fontSize: 10, color: "#374151",
+    letterSpacing: "0.1em",
+  },
+
   card: {
     background: "#0c0c1a",
     border: "1px solid #1e1e35",
@@ -399,9 +529,16 @@ const styles = {
     padding: 24,
     marginBottom: 16,
   },
+  inputLabelRow: {
+    display: "flex", alignItems: "center",
+    justifyContent: "space-between", marginBottom: 10, flexWrap: "wrap", gap: 4,
+  },
   inputLabel: {
     display: "block", fontSize: 10, color: "#6366f1",
-    letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 10,
+    letterSpacing: "0.15em", textTransform: "uppercase",
+  },
+  inputHint: {
+    fontSize: 10, color: "#374151", letterSpacing: "0.05em",
   },
   inputRow: { display: "flex", gap: 12 },
   textarea: {
