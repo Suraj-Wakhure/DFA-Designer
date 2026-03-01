@@ -285,7 +285,7 @@ export default function DFADesigner() {
           <div style={styles.footerContent}>
             <div style={styles.footerLeft}>
               <span style={styles.footerLogo}>DFA DESIGNER</span>
-              <span style={styles.footerTagline}>intelligence meets automata theory</span>
+              <span style={styles.footerTagline}></span>
             </div>
             <div style={styles.footerCenter}>
               <span style={styles.footerBuiltBy}>crafted by</span>
@@ -293,7 +293,7 @@ export default function DFADesigner() {
               <div style={styles.footerNameUnderline} />
             </div>
             <div style={styles.footerRight}>
-              <span style={styles.footerStack}>React · Groq AI · Express</span>
+              <span style={styles.footerStack}>React · Express</span>
               <span style={styles.footerYear}>© {new Date().getFullYear()}</span>
             </div>
           </div>
