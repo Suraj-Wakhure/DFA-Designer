@@ -55,3 +55,42 @@ input[type="number"]:focus {
   border-color: #6366f1 !important;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
+
+/* ── Sidebar layout ───────────────────────────────────────── */
+body {
+  overflow: hidden; /* page-level scroll handled by <main> */
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Section animations ───────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ── Table cells ──────────────────────────────────────────── */
+table input[type="text"]:focus {
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+}
+
+/* ── Responsive sidebar (mobile collapse) ─────────────────── */
+@media (max-width: 640px) {
+  aside {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+}
+
+/* ── Canvas scrollable wrapper ────────────────────────────── */
+.automata-canvas-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

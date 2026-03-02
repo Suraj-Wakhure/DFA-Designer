@@ -7,7 +7,7 @@ import Simulator from "./Simulator.jsx";
 import TransitionTable from "./TransitionTable.jsx";
 import TestCases from "./TestCases.jsx";
 
-export default function DFADesigner() {
+export default function DFADesigner({ embedded = false }) {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [dfa, setDfa] = useState(null);
@@ -107,23 +107,24 @@ export default function DFADesigner() {
     : null;
 
   return (
-    <div style={styles.page}>
-      {/* Ambient glow blobs */}
-      <div style={styles.blob1} />
-      <div style={styles.blob2} />
+    <div style={embedded ? { ...styles.page, background: 'transparent', minHeight: 'unset' } : styles.page}>
+      {!embedded && <div style={styles.blob1} />}
+      {!embedded && <div style={styles.blob2} />}
 
-      <div style={styles.inner}>
+      <div style={embedded ? { position: 'relative', zIndex: 1, padding: 0 } : styles.inner}>
         {/* ── Header ── */}
-        <header style={styles.header}>
-          <div style={styles.badge}>
-            <span style={styles.badgeDot} />
-            AI-Powered
-          </div>
-          <h1 style={styles.title}>DFA DESIGNER</h1>
-          <p style={styles.subtitle}>
-            describe a language → get an animated deterministic finite automaton
-          </p>
-        </header>
+        {!embedded && (
+          <header style={styles.header}>
+            <div style={styles.badge}>
+              <span style={styles.badgeDot} />
+              AI-Powered
+            </div>
+            <h1 style={styles.title}>DFA DESIGNER</h1>
+            <p style={styles.subtitle}>
+              describe a language → get an animated deterministic finite automaton
+            </p>
+          </header>
+        )}
 
         {/* ── Query input ── */}
         <div style={styles.card}>
@@ -278,7 +279,8 @@ export default function DFADesigner() {
       </div>
 
       {/* ── Footer ── */}
-      <footer style={styles.footer}>
+      {!embedded && (
+        <footer style={styles.footer}>
         <div style={styles.footerGlow} />
         <div style={styles.footerInner}>
           <div style={styles.footerTopLine} />
@@ -298,9 +300,10 @@ export default function DFADesigner() {
             </div>
           </div>
         </div>
-      </footer>
+        </footer>
+      )}
 
-      <style>{`
+      {!embedded && (<style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes pulse-dot {
           0%,100% { opacity:1; transform:scale(1); }
@@ -333,7 +336,7 @@ export default function DFADesigner() {
             font-size: 14px !important;
           }
         }
-      `}</style>
+      `}</style>)}
     </div>
   );
 }
